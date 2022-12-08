@@ -50,7 +50,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
       margin: const EdgeInsets.all(8.0),
       child: BlocProvider(
         create: (_) => _filmsBloc,
-        child: BlocListener<FilmsBloc, FilmsState>(
+        child: BlocConsumer<FilmsBloc, FilmsState>(
           listener: (context, state) {
             if (state is FilmsError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -60,21 +60,19 @@ class _FilmsScreenState extends State<FilmsScreen> {
               );
             }
           },
-          child: BlocBuilder<FilmsBloc, FilmsState>(
-            builder: (context, state) {
-              if (state is FilmsInitial) {
-                return _buildLoading();
-              } else if (state is FilmsLoading) {
-                return _buildLoading();
-              } else if (state is FilmsLoaded) {
-                return _buildCard(context, state.films);
-              } else if (state is FilmsError) {
-                return Container();
-              } else {
-                return Container();
-              }
-            },
-          ),
+          builder: (context, state) {
+            if (state is FilmsInitial) {
+              return _buildLoading();
+            } else if (state is FilmsLoading) {
+              return _buildLoading();
+            } else if (state is FilmsLoaded) {
+              return _buildCard(context, state.films);
+            } else if (state is FilmsError) {
+              return Container();
+            } else {
+              return Container();
+            }
+          },
         ),
       ),
     );
