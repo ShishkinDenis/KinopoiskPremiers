@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list_view/domain/model/LoginUser.dart';
+import 'package:list_view/domain/model/login_user.dart';
 import 'package:list_view/gui/films/films.dart';
 import 'package:list_view/util/validation/InputValidationMixin.dart';
 import '../../util/strings.dart';

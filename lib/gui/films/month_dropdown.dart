@@ -1,38 +1,8 @@
 import 'package:flutter/material.dart';
-
-// const List<String> list = <String>[
-//   'Январь',
-//   'Февраль',
-//   'Март',
-//   'Апрель',
-//   'Май',
-//   'Июнь',
-//   'Июль',
-//   'Август',
-//   'Сентябрь',
-//   'Октябрь',
-//   'Ноябрь',
-//   'Декабрь'
-// ];
-
-//TODO ENUM
-const List<String> list = <String>[
-  'JANUARY',
-  'FEBRUARY',
-  'MARCH',
-  'APRIL',
-  'MAY',
-  'JUNE',
-  'JULY',
-  'AUGUST',
-  'SEPTEMBER',
-  'OCTOBER',
-  'NOVEMBER',
-  'DECEMBER'
-];
+import 'package:list_view/domain/enum/month.dart';
 
 class MonthDropdown extends StatefulWidget {
-  final Function(String month) onChangeMonth;
+  final Function(Month month) onChangeMonth;
 
   const MonthDropdown({required this.onChangeMonth, super.key});
 
@@ -41,26 +11,26 @@ class MonthDropdown extends StatefulWidget {
 }
 
 class _MonthDropdownState extends State<MonthDropdown> {
-  String dropdownValue = list.first;
+  Month month = Month.january;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
+    return DropdownButton<Month>(
+      value: month,
       elevation: 16,
       underline: Container(
         height: 2,
       ),
-      onChanged: (String? value) {
+      onChanged: (Month? value) {
         setState(() {
-          dropdownValue = value!;
+          month = value!;
           widget.onChangeMonth(value);
         });
       },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+      items: Month.values.map<DropdownMenuItem<Month>>((Month value) {
+        return DropdownMenuItem<Month>(
           value: value,
-          child: Text(value),
+          child: Text(value.ruName),
         );
       }).toList(),
     );

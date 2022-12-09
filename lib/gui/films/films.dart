@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
 import '../../data/api/ui_film.dart';
+import '../../domain/enum/month.dart';
 import '../../util/strings.dart';
 import '../film_details/film_info.dart';
 import '../../util/styles.dart';
@@ -22,8 +23,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
 
   @override
   void initState() {
-    //TODO enum
-    _filmsBloc.add(const GetFilmsList(month: "JANUARY"));
+    _filmsBloc.add(const GetFilmsList(month: Month.january));
     super.initState();
   }
 
@@ -37,9 +37,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
         )),
         body: Column(
           children: [
-            MonthDropdown(
-                onChangeMonth: (month) =>
-                    _filmsBloc.add(GetFilmsList(month: month))),
+            MonthDropdown(onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),
             Expanded(child: _buildListFilms())
           ],
         ));
@@ -90,8 +88,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
 
-Widget _listViewItemBuilder(
-    BuildContext context, int index, List<UiFilm> films) {
+Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films) {
   var filmDetail = films[index];
   return ListTile(
       contentPadding: const EdgeInsets.all(10.0),
