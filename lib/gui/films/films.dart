@@ -31,10 +31,11 @@ class _FilmsScreenState extends State<FilmsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: const Text(
-          Strings.kinopoiskPremiers,
-          style: Styles.navBarTitle,
-        )),
+              Strings.kinopoiskPremiers,
+              style: Styles.navBarTitle,
+            )),
         body: Column(
           children: [
             MonthDropdown(onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),

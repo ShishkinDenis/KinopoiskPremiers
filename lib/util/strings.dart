@@ -8,4 +8,5 @@ class Strings {
   static const String emailValidationMessage = 'Please enter correct email';
   static const String passwordValidationMessage = 'Please enter correct password';
   static const String loginLabel = 'Login';
+  static const String splashScreen = 'Splash Screen';
 }
