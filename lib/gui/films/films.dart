@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
 import '../../data/api/ui_film.dart';
+import '../../domain/enum/month.dart';
 import '../../util/strings.dart';
 import '../film_details/film_info.dart';
 import '../../util/styles.dart';
@@ -22,8 +23,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
 
   @override
   void initState() {
-    //TODO enum
-    _filmsBloc.add(const GetFilmsList(month: "JANUARY"));
+    _filmsBloc.add(const GetFilmsList(month: Month.january));
     super.initState();
   }
 
@@ -31,15 +31,14 @@ class _FilmsScreenState extends State<FilmsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: const Text(
-          Strings.kinopoiskPremiers,
-          style: Styles.navBarTitle,
-        )),
+              Strings.kinopoiskPremiers,
+              style: Styles.navBarTitle,
+            )),
         body: Column(
           children: [
-            MonthDropdown(
-                onChangeMonth: (month) =>
-                    _filmsBloc.add(GetFilmsList(month: month))),
+            MonthDropdown(onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),
             Expanded(child: _buildListFilms())
           ],
         ));
@@ -50,7 +49,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
       margin: const EdgeInsets.all(8.0),
       child: BlocProvider(
         create: (_) => _filmsBloc,
-        child: BlocListener<FilmsBloc, FilmsState>(
+        child: BlocConsumer<FilmsBloc, FilmsState>(
           listener: (context, state) {
             if (state is FilmsError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -60,21 +59,19 @@ class _FilmsScreenState extends State<FilmsScreen> {
               );
             }
           },
-          child: BlocBuilder<FilmsBloc, FilmsState>(
-            builder: (context, state) {
-              if (state is FilmsInitial) {
-                return _buildLoading();
-              } else if (state is FilmsLoading) {
-                return _buildLoading();
-              } else if (state is FilmsLoaded) {
-                return _buildCard(context, state.films);
-              } else if (state is FilmsError) {
-                return Container();
-              } else {
-                return Container();
-              }
-            },
-          ),
+          builder: (context, state) {
+            if (state is FilmsInitial) {
+              return _buildLoading();
+            } else if (state is FilmsLoading) {
+              return _buildLoading();
+            } else if (state is FilmsLoaded) {
+              return _buildCard(context, state.films);
+            } else if (state is FilmsError) {
+              return Container();
+            } else {
+              return Container();
+            }
+          },
         ),
       ),
     );
@@ -92,8 +89,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
 
-Widget _listViewItemBuilder(
-    BuildContext context, int index, List<UiFilm> films) {
+Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films) {
   var filmDetail = films[index];
   return ListTile(
       contentPadding: const EdgeInsets.all(10.0),
