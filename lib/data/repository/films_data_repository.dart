@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:list_view/domain/repository/films_repository.dart';
 import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/data/api/api_util.dart';
 import 'package:list_view/data/api/films.dart';
 
+@injectable
 class FilmsDataRepository extends FilmsRepository {
   final ApiUtil apiUtil;
 

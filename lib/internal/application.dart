@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:list_view/di/locator.dart';
 import 'package:list_view/gui/SplashScreen.dart';
 import 'package:list_view/gui/films/films.dart';
 import 'package:list_view/gui/login/login.dart';
-import 'package:list_view/locator/locator.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
 
 class Application extends StatefulWidget {

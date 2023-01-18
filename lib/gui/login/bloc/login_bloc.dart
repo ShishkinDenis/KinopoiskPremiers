@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:list_view/domain/model/login_user.dart';
@@ -9,6 +10,7 @@ part 'login_event.dart';
 
 part 'login_state.dart';
 
+@injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
   final AuthenticationBloc authenticationBloc;

@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:list_view/di/locator.dart';
 import 'package:meta/meta.dart';
 
 import 'package:list_view/domain/repository/user_repository.dart';
-import 'package:list_view/locator/locator.dart';
 
 part 'authentication_event.dart';
 
 part 'authentication_state.dart';
 
+@injectable
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     final UserRepository userRepository = getIt<UserRepository>();

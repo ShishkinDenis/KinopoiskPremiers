@@ -1,4 +1,7 @@
 // TODO rewrite to Firebase Authentication
+import 'package:injectable/injectable.dart';
+
+@injectable
 class UserRepository {
   bool hasToken = false;
 

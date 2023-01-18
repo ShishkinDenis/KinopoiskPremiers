@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:list_view/util/constants.dart';
 import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/data/api/films.dart';
 
+@injectable
 class KinopoiskService {
   final Dio dio;
 
