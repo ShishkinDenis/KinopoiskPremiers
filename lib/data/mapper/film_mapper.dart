@@ -1,5 +1,5 @@
-import '../../domain/model/film.dart';
-import '../api/ui_film.dart';
+import 'package:list_view/domain/model/film.dart';
+import 'package:list_view/data/api/ui_film.dart';
 
 class FilmMapper {
   static UiFilm fromApi(Film film) {

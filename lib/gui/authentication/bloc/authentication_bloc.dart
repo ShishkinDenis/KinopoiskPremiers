@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../domain/repository/user_repository.dart';
-import '../../../locator/locator.dart';
+import 'package:list_view/domain/repository/user_repository.dart';
+import 'package:list_view/locator/locator.dart';
 
 part 'authentication_event.dart';
 

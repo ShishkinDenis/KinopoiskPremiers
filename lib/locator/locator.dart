@@ -2,12 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:list_view/domain/repository/user_repository.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
+import 'package:list_view/gui/films/bloc/films_bloc.dart';
 import 'package:list_view/gui/login/bloc/login_bloc.dart';
-import '../data/api/api_util.dart';
-import '../data/api/service/kinopoisk_service.dart';
-import '../data/repository/films_data_repository.dart';
-import '../domain/repository/films_repository.dart';
-import '../util/constants.dart';
+import 'package:list_view/data/api/api_util.dart';
+import 'package:list_view/data/api/service/kinopoisk_service.dart';
+import 'package:list_view/data/repository/films_data_repository.dart';
+import 'package:list_view/domain/repository/films_repository.dart';
+import 'package:list_view/util/constants.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,4 +25,5 @@ void setup() {
   getIt.registerFactory<AuthenticationBloc>(() => AuthenticationBloc());
   getIt.registerFactory<LoginBloc>(() => LoginBloc(
       userRepository: getIt<UserRepository>(), authenticationBloc: getIt<AuthenticationBloc>()));
+  getIt.registerFactory<FilmsBloc>(() => FilmsBloc(filmsRepository: getIt<FilmsRepository>()));
 }

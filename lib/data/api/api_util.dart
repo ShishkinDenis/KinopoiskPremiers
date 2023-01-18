@@ -1,6 +1,6 @@
 import 'package:list_view/data/api/service/kinopoisk_service.dart';
-import '../../domain/enum/month.dart';
-import 'films.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/data/api/films.dart';
 
 class ApiUtil {
   final KinopoiskService kinopoiskService;

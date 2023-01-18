@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
-import '../../data/api/ui_film.dart';
-import '../../domain/enum/month.dart';
-import '../../util/strings.dart';
-import '../film_details/film_info.dart';
-import '../../util/styles.dart';
-import 'bloc/films_bloc.dart';
+import 'package:list_view/data/api/ui_film.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/locator/locator.dart';
+import 'package:list_view/util/strings.dart';
+import 'package:list_view/gui/film_details/film_info.dart';
+import 'package:list_view/util/styles.dart';
+import 'package:list_view/gui/films/bloc/films_bloc.dart';
 
 //TODO pull-to-refresh
 class FilmsScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class FilmsScreen extends StatefulWidget {
 }
 
 class _FilmsScreenState extends State<FilmsScreen> {
-  final FilmsBloc _filmsBloc = FilmsBloc();
+  final FilmsBloc _filmsBloc = getIt<FilmsBloc>();
 
   @override
   void initState() {

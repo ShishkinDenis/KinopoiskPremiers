@@ -1,23 +1,24 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/data/api/ui_film.dart';
 import 'package:list_view/data/mapper/films_to_ui_film_list_mapper.dart';
 import 'package:list_view/domain/repository/films_repository.dart';
 import 'package:meta/meta.dart';
 
-import '../../../domain/enum/month.dart';
-import '../../../locator/locator.dart';
-import '../../../util/strings.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/util/strings.dart';
 
 part 'films_event.dart';
 
 part 'films_state.dart';
 
 class FilmsBloc extends Bloc<FilmsEvent, FilmsState> {
-  FilmsBloc() : super(FilmsInitial()) {
+  final FilmsRepository filmsRepository;
+
+  FilmsBloc({required this.filmsRepository}) : super(FilmsInitial()) {
     on<GetFilmsList>((event, emit) async {
       try {
         emit(FilmsLoading());
-        final films = await getIt<FilmsRepository>().getFilms(event.month);
+        final films = await filmsRepository.getFilms(event.month);
         emit(FilmsLoaded(FilmsToUiFilmListMapper.map(films)));
       } on Exception {
         emit(const FilmsError(Strings.failedFetchData));

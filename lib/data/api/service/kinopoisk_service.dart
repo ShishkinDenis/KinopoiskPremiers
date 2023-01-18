@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:list_view/util/constants.dart';
-import '../../../domain/enum/month.dart';
-import '../films.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/data/api/films.dart';
 
 class KinopoiskService {
   final Dio dio;

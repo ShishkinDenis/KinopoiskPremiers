@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/domain/model/login_user.dart';
 import 'package:list_view/gui/films/films.dart';
 import 'package:list_view/util/validation/InputValidationMixin.dart';
-import '../../locator/locator.dart';
-import '../../util/strings.dart';
-import '../../util/styles.dart';
-import 'bloc/login_bloc.dart';
+import 'package:list_view/locator/locator.dart';
+import 'package:list_view/util/strings.dart';
+import 'package:list_view/util/styles.dart';
+import 'package:list_view/gui/login/bloc/login_bloc.dart';
 
 //TODO use go_Router
 class LoginScreen extends StatefulWidget {

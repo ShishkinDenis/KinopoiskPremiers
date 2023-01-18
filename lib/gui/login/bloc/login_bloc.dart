@@ -1,9 +1,9 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../domain/model/login_user.dart';
-import '../../../domain/repository/user_repository.dart';
-import '../../authentication/bloc/authentication_bloc.dart';
+import 'package:list_view/domain/model/login_user.dart';
+import 'package:list_view/domain/repository/user_repository.dart';
+import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
 
 part 'login_event.dart';
 

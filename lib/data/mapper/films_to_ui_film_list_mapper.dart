@@ -1,7 +1,7 @@
 import 'package:list_view/data/api/ui_film.dart';
 
-import '../api/films.dart';
-import 'film_mapper.dart';
+import 'package:list_view/data/api/films.dart';
+import 'package:list_view/data/mapper/film_mapper.dart';
 
 class FilmsToUiFilmListMapper {
   static List<UiFilm> map(Films films) {

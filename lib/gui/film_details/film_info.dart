@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../data/api/ui_film.dart';
-import '../../util/styles.dart';
+import 'package:list_view/data/api/ui_film.dart';
+import 'package:list_view/util/styles.dart';
 
 class FilmInfo extends StatelessWidget {
   final UiFilm film;
