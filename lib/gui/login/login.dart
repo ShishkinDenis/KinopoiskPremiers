@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:list_view/domain/model/login_user.dart';
 import 'package:list_view/gui/films/films.dart';
+import 'package:list_view/util/validation/InputValidationMixin.dart';
+import 'package:list_view/locator/locator.dart';
+import 'package:list_view/util/strings.dart';
+import 'package:list_view/util/styles.dart';
+import 'package:list_view/gui/login/bloc/login_bloc.dart';
 
-import '../../util/strings.dart';
-import '../../util/styles.dart';
-
+//TODO use go_Router
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -13,55 +18,162 @@ class LoginScreen extends StatefulWidget {
   }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
+  late LoginBloc _loginBloc;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isEmailChanged = false;
+  bool _isPasswordChanged = false;
+  bool _isEmailValid = false;
+  bool _isPasswordValid = false;
+
+  @override
+  void initState() {
+    _loginBloc = getIt<LoginBloc>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  String? get _emailErrorText {
+    final text = _emailController.value.text;
+    _isEmailValid = text.isNotEmpty && isEmailValid(text);
+    if (!_isEmailValid) {
+      return Strings.emailValidationMessage;
+    }
+    return null;
+  }
+
+  String? get _passwordErrorText {
+    final text = _passwordController.value.text;
+    _isPasswordValid = text.isNotEmpty && isPasswordValid(text);
+    if (!_isPasswordValid) {
+      return Strings.passwordValidationMessage;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: const Text(
+      appBar: AppBar(
+        title: const Text(
           Strings.kinopoiskPremiers,
           style: Styles.navBarTitle,
-        )),
-        body: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'User Name',
-                    hintText: 'Enter User Name'),
+        ),
+      ),
+      body: BlocProvider(
+        create: (_) => _loginBloc,
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccess) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) => const FilmsScreen()),
+                  (Route<dynamic> route) => false);
+            } else if (state is LoginFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.error),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  _buildEmailField(),
+                  _buildPasswordField(),
+                  _buildLoginButton(),
+                  _buildProgressBar(state)
+                ],
               ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmailField() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      height: 100,
+      child: TextField(
+        controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
+        onChanged: (text) => setState(() {
+          _isEmailChanged = true;
+        }),
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: Strings.emailLabel,
+            hintText: Strings.emailHint,
+            errorText: _isEmailChanged ? _emailErrorText : null),
+      ),
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      height: 100,
+      child: TextField(
+        controller: _passwordController,
+        onChanged: (text) => setState(() {
+          _isPasswordChanged = true;
+        }),
+        obscureText: true,
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: Strings.passwordLabel,
+            hintText: Strings.passwordHint,
+            errorText: _isPasswordChanged ? _passwordErrorText : null),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Container(
+      height: 70,
+      width: 250,
+      padding: const EdgeInsets.only(top: 10),
+      child: ElevatedButton(
+        onPressed: _isEveryFieldValid() ? _login : null,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter your password'),
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Container(
-                    height: 50,
-                    width: 250,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => FilmsScreen()));
-                        },
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ))),
-                        child: const Text("Login",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 25)))))
-          ],
-        ));
+          ),
+        ),
+        child: const Text(
+          Strings.loginLabel,
+          style: TextStyle(color: Colors.white, fontSize: 25),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProgressBar(LoginState state) {
+    return Container(child: state is LoginLoading ? _buildLoading() : null);
+  }
+
+  void _login() {
+    LoginUser loginUser =
+        LoginUser(email: _emailController.text, password: _passwordController.text);
+    _loginBloc.add(LoginButtonPressed(loginUser: loginUser));
+  }
+
+  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+
+  bool _isEveryFieldValid() {
+    return _isEmailValid && _isPasswordValid;
   }
 }

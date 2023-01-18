@@ -1,4 +1,4 @@
-import '../../domain/model/film.dart';
+import 'package:list_view/domain/model/film.dart';
 
 class Films {
   late List<Film> items;

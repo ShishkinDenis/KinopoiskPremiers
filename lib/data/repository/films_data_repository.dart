@@ -1,14 +1,15 @@
 import 'package:list_view/domain/repository/films_repository.dart';
-import '../api/api_util.dart';
-import '../api/films.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/data/api/api_util.dart';
+import 'package:list_view/data/api/films.dart';
 
 class FilmsDataRepository extends FilmsRepository {
-  final ApiUtil _apiUtil;
+  final ApiUtil apiUtil;
 
-  FilmsDataRepository(this._apiUtil);
+  FilmsDataRepository({required this.apiUtil});
 
   @override
-  Future<Films> getFilms(String month) {
-    return _apiUtil.getFilms(month);
+  Future<Films> getFilms(Month month) {
+    return apiUtil.getFilms(month);
   }
 }

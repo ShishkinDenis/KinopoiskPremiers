@@ -1,22 +1,16 @@
 import 'package:dio/dio.dart';
-import '../films.dart';
+import 'package:list_view/util/constants.dart';
+import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/data/api/films.dart';
 
 class KinopoiskService {
-  //TODO move URL and KEY to separate file
-  //TODO add changing params - month, year
+  final Dio dio;
 
-  static const _baseUrl =
-      'https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres';
+  KinopoiskService({required this.dio});
 
-  final Dio _dio = Dio(
-    BaseOptions(baseUrl: _baseUrl, headers: {
-      'X-API-KEY': 'ea2d8faf-7451-4b43-83e1-386fcf829f02',
-      'Content-Type': 'application/json',
-    }),
-  );
-
-  Future<Films> getFilms(String month) async {
-    final response = await _dio.get('?year=2022&month=$month');
+  Future<Films> getFilms(Month month) async {
+    final response = await dio
+        .get('?${Constants.year}=${Constants.year2023}&${Constants.month}=${month.enName}');
     return Films.fromApi(response.data);
   }
 }
