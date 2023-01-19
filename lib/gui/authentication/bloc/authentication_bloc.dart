@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:list_view/di/locator.dart';
 import 'package:meta/meta.dart';
 
 import 'package:list_view/domain/repository/user_repository.dart';
@@ -11,8 +10,9 @@ part 'authentication_state.dart';
 
 @injectable
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(AuthenticationInitial()) {
-    final UserRepository userRepository = getIt<UserRepository>();
+  final UserRepository userRepository;
+
+  AuthenticationBloc({required this.userRepository}) : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AppStarted) {
         final bool hasToken = await userRepository.getToken();
