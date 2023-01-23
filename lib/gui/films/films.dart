@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
 import 'package:list_view/data/api/ui_film.dart';
 import 'package:list_view/domain/enum/month.dart';
+import 'package:list_view/util/constants.dart';
 import 'package:list_view/util/strings.dart';
-import 'package:list_view/gui/film_details/film_info.dart';
 import 'package:list_view/util/styles.dart';
 import 'package:list_view/gui/films/bloc/films_bloc.dart';
 
@@ -102,9 +103,7 @@ Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films)
 }
 
 void _navigationToFilmDetail(BuildContext context, UiFilm filmDetail) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return FilmInfo(filmDetail);
-  }));
+  context.push(Constants.filmInfo, extra: filmDetail);
 }
 
 Widget _itemThumbnail(UiFilm filmDetail) {
