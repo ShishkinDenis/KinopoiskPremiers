@@ -1,6 +1,9 @@
 name: Flutter CI
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
