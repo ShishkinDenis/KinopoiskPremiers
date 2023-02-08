@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:list_view/data/api/ui_film.dart';
+import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/SplashScreen.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
 import 'package:list_view/gui/film_details/film_info.dart';
@@ -20,7 +21,9 @@ Widget _initialScreenRouteBuilder(BuildContext context, GoRouterState state) {
     if (state is AuthenticationInitial) {
       return const SplashScreen();
     } else if (state is AuthenticationAuthenticated) {
-      return const FilmsScreen();
+      return const FilmsScreen(Month.january);
+    } else if (state is NotificationClickedState) {
+      return FilmsScreen(state.month);
     } else if (state is AuthenticationUnauthenticated) {
       return const LoginScreen();
     } else {
@@ -29,7 +32,8 @@ Widget _initialScreenRouteBuilder(BuildContext context, GoRouterState state) {
   });
 }
 
-Widget _filmsScreenRouteBuilder(BuildContext context, GoRouterState state) => const FilmsScreen();
+Widget _filmsScreenRouteBuilder(BuildContext context, GoRouterState state) =>
+    const FilmsScreen(Month.january);
 
 Widget _filmInfoScreenRouteBuilder(BuildContext context, GoRouterState state) {
   UiFilm filmDetail = state.extra as UiFilm;

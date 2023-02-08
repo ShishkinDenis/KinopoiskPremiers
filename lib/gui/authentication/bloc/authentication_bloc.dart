@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:list_view/domain/enum/month.dart';
 import 'package:meta/meta.dart';
 
 import 'package:list_view/domain/repository/user_repository.dart';
@@ -31,6 +32,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         emit(AuthenticationLoading());
         await userRepository.deleteToken();
         emit(AuthenticationUnauthenticated());
+      }
+      if (event is NotificationClickedEvent) {
+        emit(NotificationClickedState(month: event.month));
       }
     });
   }

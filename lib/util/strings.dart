@@ -9,4 +9,11 @@ class Strings {
   static const String passwordValidationMessage = 'Please enter correct password';
   static const String loginLabel = 'Login';
   static const String splashScreen = 'Splash Screen';
+
+  //Pushes
+  static const String channelId = 'high_importance_channel';
+  static const String channelTitle = 'High Importance Notifications';
+  static const String channelDescription = 'This channel is used for important notifications.';
+  static const String notificationIcon = '@mipmap/ic_launcher';
+  static const String month = 'month';
 }

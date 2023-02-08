@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_view/di/locator.dart';
+import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
 import 'package:list_view/navigation/router.dart';
+import 'package:list_view/util/pushes/push_notifications_manager.dart';
 
 class Application extends StatefulWidget {
   const Application({super.key});
@@ -20,6 +22,7 @@ class _ApplicationState extends State<Application> {
   void initState() {
     authenticationBloc = getIt<AuthenticationBloc>();
     authenticationBloc.add(AppStarted());
+    PushNotificationsManager().listenToMessages(_handlePushClick);
     super.initState();
   }
 
@@ -30,5 +33,9 @@ class _ApplicationState extends State<Application> {
         child: MaterialApp.router(
           routerConfig: router,
         ));
+  }
+
+  void _handlePushClick(Month month) {
+    authenticationBloc.add(NotificationClickedEvent(month: month));
   }
 }

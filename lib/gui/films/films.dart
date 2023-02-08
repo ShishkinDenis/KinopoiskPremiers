@@ -12,7 +12,9 @@ import 'package:list_view/gui/films/bloc/films_bloc.dart';
 
 //TODO pull-to-refresh
 class FilmsScreen extends StatefulWidget {
-  const FilmsScreen({super.key});
+  final Month month;
+
+  const FilmsScreen(this.month, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +27,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
 
   @override
   void initState() {
-    _filmsBloc.add(const GetFilmsList(month: Month.january));
+    _filmsBloc.add(GetFilmsList(month: widget.month));
     super.initState();
   }
 
@@ -40,7 +42,9 @@ class _FilmsScreenState extends State<FilmsScreen> {
             )),
         body: Column(
           children: [
-            MonthDropdown(onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),
+            MonthDropdown(
+                month: widget.month,
+                onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),
             Expanded(child: _buildListFilms())
           ],
         ));
