@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:list_view/domain/enum/month.dart';
 
 class MonthDropdown extends StatefulWidget {
-  final Month month;
-  final Function(Month month) onChangeMonth;
-
   const MonthDropdown({required this.month, required this.onChangeMonth, super.key});
+
+  final Month month;
+  final void Function(Month month) onChangeMonth;
 
   @override
   State<MonthDropdown> createState() => _MonthDropdownState();

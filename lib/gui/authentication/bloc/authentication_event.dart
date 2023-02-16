@@ -8,15 +8,15 @@ abstract class AuthenticationEvent {
 class AppStarted extends AuthenticationEvent {}
 
 class LoggedIn extends AuthenticationEvent {
-  final String token;
-
   const LoggedIn({required this.token});
+
+  final String token;
 }
 
 class LoggedOut extends AuthenticationEvent {}
 
 class NotificationClickedEvent extends AuthenticationEvent {
-  final Month month;
-
   const NotificationClickedEvent({required this.month});
+
+  final Month month;
 }

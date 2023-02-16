@@ -14,7 +14,7 @@ class AuthenticationUnauthenticated extends AuthenticationState {}
 class AuthenticationLoading extends AuthenticationState {}
 
 class NotificationClickedState extends AuthenticationState {
-  final Month month;
-
   const NotificationClickedState({required this.month});
+
+  final Month month;
 }

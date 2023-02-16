@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/model/login_user.dart';
+import 'package:list_view/gui/login/bloc/login_bloc.dart';
 import 'package:list_view/util/constants.dart';
-import 'package:list_view/util/validation/InputValidationMixin.dart';
 import 'package:list_view/util/strings.dart';
 import 'package:list_view/util/styles.dart';
-import 'package:list_view/gui/login/bloc/login_bloc.dart';
+import 'package:list_view/util/validation/input_validation_mixin.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -109,10 +109,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
           _isEmailChanged = true;
         }),
         decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: Strings.emailLabel,
-            hintText: Strings.emailHint,
-            errorText: _isEmailChanged ? _emailErrorText : null),
+          border: const OutlineInputBorder(),
+          labelText: Strings.emailLabel,
+          hintText: Strings.emailHint,
+          errorText: _isEmailChanged ? _emailErrorText : null,
+        ),
       ),
     );
   }
@@ -128,10 +129,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         }),
         obscureText: true,
         decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: Strings.passwordLabel,
-            hintText: Strings.passwordHint,
-            errorText: _isPasswordChanged ? _passwordErrorText : null),
+          border: const OutlineInputBorder(),
+          labelText: Strings.passwordLabel,
+          hintText: Strings.passwordHint,
+          errorText: _isPasswordChanged ? _passwordErrorText : null,
+        ),
       ),
     );
   }
@@ -163,8 +165,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   }
 
   void _login() {
-    LoginUser loginUser =
-        LoginUser(email: _emailController.text, password: _passwordController.text);
+    final loginUser = LoginUser(email: _emailController.text, password: _passwordController.text);
     _loginBloc.add(LoginButtonPressed(loginUser: loginUser));
   }
 

@@ -29,10 +29,11 @@ class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => authenticationBloc,
-        child: MaterialApp.router(
-          routerConfig: router,
-        ));
+      create: (_) => authenticationBloc,
+      child: MaterialApp.router(
+        routerConfig: router,
+      ),
+    );
   }
 
   void _handlePushClick(Month month) {

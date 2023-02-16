@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_view/domain/enum/month.dart';
-import 'package:meta/meta.dart';
-
 import 'package:list_view/domain/repository/user_repository.dart';
+import 'package:meta/meta.dart';
 
 part 'authentication_event.dart';
 
@@ -11,12 +10,10 @@ part 'authentication_state.dart';
 
 @injectable
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
-
   AuthenticationBloc({required this.userRepository}) : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AppStarted) {
-        final bool hasToken = await userRepository.getToken();
+        final hasToken = await userRepository.getToken();
         if (hasToken) {
           emit(AuthenticationAuthenticated());
         } else {
@@ -38,4 +35,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       }
     });
   }
+
+  final UserRepository userRepository;
 }
