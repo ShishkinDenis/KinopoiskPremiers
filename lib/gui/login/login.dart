@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/model/login_user.dart';
-import 'package:list_view/gui/films/films.dart';
-import 'package:list_view/util/validation/InputValidationMixin.dart';
-import 'package:list_view/locator/locator.dart';
+import 'package:list_view/gui/login/bloc/login_bloc.dart';
+import 'package:list_view/util/constants.dart';
 import 'package:list_view/util/strings.dart';
 import 'package:list_view/util/styles.dart';
-import 'package:list_view/gui/login/bloc/login_bloc.dart';
+import 'package:list_view/util/validation/input_validation_mixin.dart';
 
-//TODO use go_Router
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -72,10 +72,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (BuildContext context) => const FilmsScreen()),
-                  (Route<dynamic> route) => false);
+              context.go(Constants.filmsScreen);
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -112,10 +109,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
           _isEmailChanged = true;
         }),
         decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: Strings.emailLabel,
-            hintText: Strings.emailHint,
-            errorText: _isEmailChanged ? _emailErrorText : null),
+          border: const OutlineInputBorder(),
+          labelText: Strings.emailLabel,
+          hintText: Strings.emailHint,
+          errorText: _isEmailChanged ? _emailErrorText : null,
+        ),
       ),
     );
   }
@@ -131,10 +129,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         }),
         obscureText: true,
         decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: Strings.passwordLabel,
-            hintText: Strings.passwordHint,
-            errorText: _isPasswordChanged ? _passwordErrorText : null),
+          border: const OutlineInputBorder(),
+          labelText: Strings.passwordLabel,
+          hintText: Strings.passwordHint,
+          errorText: _isPasswordChanged ? _passwordErrorText : null,
+        ),
       ),
     );
   }
@@ -166,8 +165,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   }
 
   void _login() {
-    LoginUser loginUser =
-        LoginUser(email: _emailController.text, password: _passwordController.text);
+    final loginUser = LoginUser(email: _emailController.text, password: _passwordController.text);
     _loginBloc.add(LoginButtonPressed(loginUser: loginUser));
   }
 

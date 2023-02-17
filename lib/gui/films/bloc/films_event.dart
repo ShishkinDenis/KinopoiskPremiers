@@ -6,7 +6,7 @@ abstract class FilmsEvent {
 }
 
 class GetFilmsList extends FilmsEvent {
-  final Month month;
-
   const GetFilmsList({required this.month});
+
+  final Month month;
 }

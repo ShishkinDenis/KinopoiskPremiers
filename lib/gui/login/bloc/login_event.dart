@@ -4,7 +4,7 @@ part of 'login_bloc.dart';
 abstract class LoginEvent {}
 
 class LoginButtonPressed extends LoginEvent {
-  final LoginUser loginUser;
-
   LoginButtonPressed({required this.loginUser});
+
+  final LoginUser loginUser;
 }

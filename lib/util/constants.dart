@@ -7,4 +7,9 @@ class Constants {
   static const month = 'month';
   static const year = 'year';
   static const year2023 = '2023';
+
+  // go_router
+  static const initialScreen = '/';
+  static const filmsScreen = '/filmsScreen';
+  static const filmInfo = '/filmInfo';
 }

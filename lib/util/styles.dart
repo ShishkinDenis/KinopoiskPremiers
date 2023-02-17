@@ -10,11 +10,13 @@ class Styles {
     fontFamily: fontNameDefault,
   );
   static const headerLarge = TextStyle(
-      fontFamily: fontNameDefault,
-      fontSize: _textSizeLarge,
-      color: _textColorStrong);
+    fontFamily: fontNameDefault,
+    fontSize: _textSizeLarge,
+    color: _textColorStrong,
+  );
   static const textDefault = TextStyle(
-      fontFamily: fontNameDefault,
-      fontSize: _textSizeDefault,
-      color: _textColorDefault);
+    fontFamily: fontNameDefault,
+    fontSize: _textSizeDefault,
+    color: _textColorDefault,
+  );
 }

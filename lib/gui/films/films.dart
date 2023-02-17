@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:list_view/gui/films/month_dropdown.dart';
+import 'package:go_router/go_router.dart';
 import 'package:list_view/data/api/ui_film.dart';
+import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/enum/month.dart';
-import 'package:list_view/locator/locator.dart';
-import 'package:list_view/util/strings.dart';
-import 'package:list_view/gui/film_details/film_info.dart';
-import 'package:list_view/util/styles.dart';
 import 'package:list_view/gui/films/bloc/films_bloc.dart';
+import 'package:list_view/gui/films/month_dropdown.dart';
+import 'package:list_view/util/constants.dart';
+import 'package:list_view/util/strings.dart';
+import 'package:list_view/util/styles.dart';
 
-//TODO pull-to-refresh
+// TODO(ShishkinDenis): pull-to-refresh
 class FilmsScreen extends StatefulWidget {
-  const FilmsScreen({super.key});
+  const FilmsScreen(this.month, {super.key});
+
+  final Month month;
 
   @override
   State<StatefulWidget> createState() {
@@ -21,33 +24,39 @@ class FilmsScreen extends StatefulWidget {
 
 class _FilmsScreenState extends State<FilmsScreen> {
   final FilmsBloc _filmsBloc = getIt<FilmsBloc>();
+  late List<UiFilm> _films;
 
   @override
   void initState() {
-    _filmsBloc.add(const GetFilmsList(month: Month.january));
+    _filmsBloc.add(GetFilmsList(month: widget.month));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: const Text(
-              Strings.kinopoiskPremiers,
-              style: Styles.navBarTitle,
-            )),
-        body: Column(
-          children: [
-            MonthDropdown(onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month))),
-            Expanded(child: _buildListFilms())
-          ],
-        ));
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          Strings.kinopoiskPremiers,
+          style: Styles.navBarTitle,
+        ),
+      ),
+      body: Column(
+        children: [
+          MonthDropdown(
+            month: widget.month,
+            onChangeMonth: (month) => _filmsBloc.add(GetFilmsList(month: month)),
+          ),
+          Expanded(child: _buildListFilms())
+        ],
+      ),
+    );
   }
 
   Widget _buildListFilms() {
     return Container(
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8),
       child: BlocProvider(
         create: (_) => _filmsBloc,
         child: BlocConsumer<FilmsBloc, FilmsState>(
@@ -66,7 +75,8 @@ class _FilmsScreenState extends State<FilmsScreen> {
             } else if (state is FilmsLoading) {
               return _buildLoading();
             } else if (state is FilmsLoaded) {
-              return _buildCard(context, state.films);
+              _films = state.films;
+              return _buildCard(context, _films);
             } else if (state is FilmsError) {
               return Container();
             } else {
@@ -79,37 +89,48 @@ class _FilmsScreenState extends State<FilmsScreen> {
   }
 
   Widget _buildCard(BuildContext context, List<UiFilm> films) {
-    return ListView.builder(
-        itemCount: films.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return _listViewItemBuilder(context, index, films);
+    return ReorderableListView.builder(
+      onReorder: (int oldIndex, int newIndex) {
+        setState(() {
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
+          final item = _films.removeAt(oldIndex);
+          _films.insert(newIndex, item);
         });
+      },
+      itemCount: films.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return _listViewItemBuilder(context, index, films);
+      },
+    );
   }
 
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 }
 
 Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films) {
-  var filmDetail = films[index];
+  final filmDetail = films[index];
   return ListTile(
-      contentPadding: const EdgeInsets.all(10.0),
-      leading: _itemThumbnail(filmDetail),
-      title: _itemTitle(filmDetail),
-      onTap: () {
-        _navigationToFilmDetail(context, filmDetail);
-      });
+    key: ValueKey(filmDetail),
+    contentPadding: const EdgeInsets.all(10),
+    leading: _itemThumbnail(filmDetail),
+    trailing: const Icon(Icons.drag_handle),
+    title: _itemTitle(filmDetail),
+    onTap: () {
+      _navigationToFilmDetail(context, filmDetail);
+    },
+  );
 }
 
 void _navigationToFilmDetail(BuildContext context, UiFilm filmDetail) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return FilmInfo(filmDetail);
-  }));
+  context.push(Constants.filmInfo, extra: filmDetail);
 }
 
 Widget _itemThumbnail(UiFilm filmDetail) {
   return Container(
-    constraints: const BoxConstraints.tightFor(width: 100.0),
+    constraints: const BoxConstraints.tightFor(width: 100),
     child: Image.network(filmDetail.posterUrlPreview, fit: BoxFit.fitWidth),
   );
 }
