@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:list_view/data/api/ui_film.dart';
 import 'package:list_view/di/locator.dart';
@@ -7,7 +8,6 @@ import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/films/bloc/films_bloc.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
 import 'package:list_view/util/constants.dart';
-import 'package:list_view/util/strings.dart';
 import 'package:list_view/util/styles.dart';
 
 // TODO(ShishkinDenis): pull-to-refresh
@@ -37,8 +37,8 @@ class _FilmsScreenState extends State<FilmsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          Strings.kinopoiskPremiers,
+        title: Text(
+          AppLocalizations.of(context)!.kinopoiskPremiers,
           style: Styles.navBarTitle,
         ),
       ),
@@ -64,7 +64,7 @@ class _FilmsScreenState extends State<FilmsScreen> {
             if (state is FilmsError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message!),
+                  content: Text(AppLocalizations.of(context)!.failedFetchData),
                 ),
               );
             }

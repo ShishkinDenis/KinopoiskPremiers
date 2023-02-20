@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/model/login_user.dart';
 import 'package:list_view/gui/login/bloc/login_bloc.dart';
 import 'package:list_view/util/constants.dart';
-import 'package:list_view/util/strings.dart';
 import 'package:list_view/util/styles.dart';
 import 'package:list_view/util/validation/input_validation_mixin.dart';
 
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
     final text = _emailController.value.text;
     _isEmailValid = text.isNotEmpty && isEmailValid(text);
     if (!_isEmailValid) {
-      return Strings.emailValidationMessage;
+      return AppLocalizations.of(context)!.emailValidationMessage;
     }
     return null;
   }
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
     final text = _passwordController.value.text;
     _isPasswordValid = text.isNotEmpty && isPasswordValid(text);
     if (!_isPasswordValid) {
-      return Strings.passwordValidationMessage;
+      return AppLocalizations.of(context)!.passwordValidationMessage;
     }
     return null;
   }
@@ -62,8 +62,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          Strings.kinopoiskPremiers,
+        title: Text(
+          AppLocalizations.of(context)!.kinopoiskPremiers,
           style: Styles.navBarTitle,
         ),
       ),
@@ -110,8 +110,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         }),
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          labelText: Strings.emailLabel,
-          hintText: Strings.emailHint,
+          labelText: AppLocalizations.of(context)!.emailLabel,
+          hintText: AppLocalizations.of(context)!.emailHint,
           errorText: _isEmailChanged ? _emailErrorText : null,
         ),
       ),
@@ -130,8 +130,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         obscureText: true,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          labelText: Strings.passwordLabel,
-          hintText: Strings.passwordHint,
+          labelText: AppLocalizations.of(context)!.passwordLabel,
+          hintText: AppLocalizations.of(context)!.passwordHint,
           errorText: _isPasswordChanged ? _passwordErrorText : null,
         ),
       ),
@@ -152,9 +152,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
             ),
           ),
         ),
-        child: const Text(
-          Strings.loginLabel,
-          style: TextStyle(color: Colors.white, fontSize: 25),
+        child: Text(
+          AppLocalizations.of(context)!.loginLabel,
+          style: const TextStyle(color: Colors.white, fontSize: 25),
         ),
       ),
     );

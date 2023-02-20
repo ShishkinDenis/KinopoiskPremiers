@@ -15,8 +15,4 @@ class FilmsLoaded extends FilmsState {
   final List<UiFilm> films;
 }
 
-class FilmsError extends FilmsState {
-  const FilmsError(this.message);
-
-  final String? message;
-}
+class FilmsError extends FilmsState {}

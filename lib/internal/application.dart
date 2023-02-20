@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
@@ -32,6 +33,8 @@ class _ApplicationState extends State<Application> {
       create: (_) => authenticationBloc,
       child: MaterialApp.router(
         routerConfig: router,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

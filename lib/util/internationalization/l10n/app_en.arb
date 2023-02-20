@@ -1,0 +1,12 @@
+{
+"kinopoiskPremiers": "Kinopoisk Premiers",
+"emailLabel": "Email",
+"loginLabel": "Login",
+"passwordLabel": "Password",
+"emailHint": "Enter email",
+"passwordHint": "Enter your password",
+"emailValidationMessage": "Please enter correct email",
+"passwordValidationMessage": "Please enter correct password",
+"splashScreen": "Splash Screen",
+"failedFetchData": "Failed to fetch data"
+}

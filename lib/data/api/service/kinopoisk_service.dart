@@ -12,7 +12,7 @@ class KinopoiskService {
 
   Future<Films> getFilms(Month month) async {
     final response = await dio
-        .get('?${Constants.year}=${Constants.year2023}&${Constants.month}=${month.enName}');
+        .get('?${Constants.year}=${Constants.year2023}&${Constants.month}=${month.value}');
     return Films.fromApi(response.data as Map<String, dynamic>);
   }
 }

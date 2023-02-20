@@ -1,0 +1,12 @@
+{
+"kinopoiskPremiers": "Премьеры Кинопоиска",
+"emailLabel": "Email",
+"loginLabel": "Вход",
+"passwordLabel": "Пароль",
+"emailHint": "Введите email",
+"passwordHint": "Введите пароль",
+"emailValidationMessage": "Введите верный email",
+"passwordValidationMessage": "Введите верный пароль",
+"splashScreen": "Splash Screen",
+"failedFetchData": "Не удалось получить данные"
+}
