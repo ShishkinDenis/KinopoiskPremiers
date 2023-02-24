@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:list_view/data/api/ui_film.dart';
 import 'package:list_view/util/styles.dart';
 
-class FilmInfo extends StatelessWidget {
-  const FilmInfo(this.film, {super.key});
+class FilmDetailsScreen extends StatelessWidget {
+  const FilmDetailsScreen(this.film, {super.key});
 
   final UiFilm film;
 

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:list_view/domain/enum/month.dart';
-import 'package:list_view/util/strings.dart';
+import 'package:list_view/util/constants.dart';
 
 class MonthDropdown extends StatefulWidget {
   const MonthDropdown({required this.month, required this.onChangeMonth, super.key});
@@ -42,7 +42,7 @@ class _MonthDropdownState extends State<MonthDropdown> {
       items: Month.values.map<DropdownMenuItem<Month>>((Month value) {
         return DropdownMenuItem<Month>(
           value: value,
-          child: Text((Platform.localeName == Strings.enLocale) ? value.enName : value.ruName),
+          child: Text((Platform.localeName == Constants.enLocale) ? value.enName : value.ruName),
         );
       }).toList(),
     );

@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/authentication/bloc/authentication_bloc.dart';
-import 'package:list_view/navigation/router.dart';
+import 'package:list_view/navigation/app_router.gr.dart';
 import 'package:list_view/util/pushes/push_notifications_manager.dart';
 
 class Application extends StatefulWidget {
@@ -18,6 +18,7 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   late AuthenticationBloc authenticationBloc;
+  final _appRouter = AppRouter();
 
   @override
   void initState() {
@@ -32,7 +33,8 @@ class _ApplicationState extends State<Application> {
     return BlocProvider(
       create: (_) => authenticationBloc,
       child: MaterialApp.router(
-        routerConfig: router,
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
       ),

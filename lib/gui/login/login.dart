@@ -1,11 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/model/login_user.dart';
 import 'package:list_view/gui/login/bloc/login_bloc.dart';
-import 'package:list_view/util/constants.dart';
+import 'package:list_view/navigation/app_router.gr.dart';
 import 'package:list_view/util/styles.dart';
 import 'package:list_view/util/validation/input_validation_mixin.dart';
 
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              context.go(Constants.filmsScreen);
+              context.router.push(const HomeRoute());
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -110,8 +110,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         }),
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          labelText: AppLocalizations.of(context)!.emailLabel,
-          hintText: AppLocalizations.of(context)!.emailHint,
+          labelText: AppLocalizations.of(context)?.emailLabel,
+          hintText: AppLocalizations.of(context)?.emailHint,
           errorText: _isEmailChanged ? _emailErrorText : null,
         ),
       ),
@@ -130,8 +130,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         obscureText: true,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          labelText: AppLocalizations.of(context)!.passwordLabel,
-          hintText: AppLocalizations.of(context)!.passwordHint,
+          labelText: AppLocalizations.of(context)?.passwordLabel,
+          hintText: AppLocalizations.of(context)?.passwordHint,
           errorText: _isPasswordChanged ? _passwordErrorText : null,
         ),
       ),

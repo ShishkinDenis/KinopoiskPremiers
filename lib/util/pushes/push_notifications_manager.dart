@@ -3,7 +3,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:list_view/domain/enum/month.dart';
-import 'package:list_view/util/strings.dart';
+import 'package:list_view/util/constants.dart';
+
 
 class PushNotificationsManager {
   factory PushNotificationsManager() {
@@ -19,9 +20,9 @@ class PushNotificationsManager {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    Strings.channelId, // id
-    Strings.channelTitle, // title
-    description: Strings.channelDescription, // description
+    Constants.channelId, // id
+    Constants.channelTitle, // title
+    description: Constants.channelDescription, // description
     importance: Importance.high,
   );
 
@@ -49,7 +50,7 @@ class PushNotificationsManager {
   }
 
   void _setupNotificationSettings() {
-    const initializationSettingsAndroid = AndroidInitializationSettings(Strings.notificationIcon);
+    const initializationSettingsAndroid = AndroidInitializationSettings(Constants.notificationIcon);
     const initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -100,7 +101,7 @@ class PushNotificationsManager {
             channel.name,
             channelDescription: channel.description,
             color: Colors.blue,
-            icon: Strings.notificationIcon,
+            icon: Constants.notificationIcon,
           ),
         ),
       );
@@ -109,6 +110,6 @@ class PushNotificationsManager {
 
   Month getMonth(RemoteMessage message) {
     return Month.values
-        .byName((message.data as Map<String, String>)[Strings.month] ?? Month.january.name);
+        .byName((message.data as Map<String, String>)[Constants.month] ?? Month.january.name);
   }
 }

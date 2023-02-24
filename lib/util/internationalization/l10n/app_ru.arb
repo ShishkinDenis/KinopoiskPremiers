@@ -8,5 +8,7 @@
 "emailValidationMessage": "Введите верный email",
 "passwordValidationMessage": "Введите верный пароль",
 "splashScreen": "Splash Screen",
-"failedFetchData": "Не удалось получить данные"
+"failedFetchData": "Не удалось получить данные",
+"films": "Фильмы",
+"favourites": "Избранное"
 }

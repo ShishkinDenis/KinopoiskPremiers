@@ -8,5 +8,7 @@
 "emailValidationMessage": "Please enter correct email",
 "passwordValidationMessage": "Please enter correct password",
 "splashScreen": "Splash Screen",
-"failedFetchData": "Failed to fetch data"
+"failedFetchData": "Failed to fetch data",
+"films": "Films",
+"favourites": "Favourites"
 }

@@ -1,16 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:list_view/data/api/ui_film.dart';
 import 'package:list_view/di/locator.dart';
 import 'package:list_view/domain/enum/month.dart';
 import 'package:list_view/gui/films/bloc/films_bloc.dart';
 import 'package:list_view/gui/films/month_dropdown.dart';
-import 'package:list_view/util/constants.dart';
+import 'package:list_view/navigation/app_router.gr.dart';
 import 'package:list_view/util/styles.dart';
 
 // TODO(ShishkinDenis): pull-to-refresh
+// TODO(ShishkinDenis): pagination
 class FilmsScreen extends StatefulWidget {
   const FilmsScreen(this.month, {super.key});
 
@@ -125,7 +126,7 @@ Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films)
 }
 
 void _navigationToFilmDetail(BuildContext context, UiFilm filmDetail) {
-  context.push(Constants.filmInfo, extra: filmDetail);
+  context.router.push(FilmDetailsRoute(film: filmDetail));
 }
 
 Widget _itemThumbnail(UiFilm filmDetail) {
