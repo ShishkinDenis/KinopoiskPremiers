@@ -65,8 +65,10 @@ dependencies:
   #internationalization
   flutter_localizations:
     sdk: flutter
-
   intl: ^0.17.0
+
+  #bottom bar badges
+  badges: ^3.0.2
 
 dev_dependencies:
   flutter_test:

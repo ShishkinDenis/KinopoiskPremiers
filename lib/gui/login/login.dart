@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              context.router.push(const HomeRoute());
+              context.router.replace(const HomeRoute());
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

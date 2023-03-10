@@ -12,10 +12,15 @@ import 'package:list_view/util/styles.dart';
 
 // TODO(ShishkinDenis): pull-to-refresh
 // TODO(ShishkinDenis): pagination
+
 class FilmsScreen extends StatefulWidget {
-  const FilmsScreen(this.month, {super.key});
+  //TODO refactor, use stateManagment
+  // const FilmsScreen(this.month, {super.key});
+  const FilmsScreen(this.month, this.onChangeFavouritesAmount, {super.key});
 
   final Month month;
+
+  final void Function(int favouritesBadgeAmount)? onChangeFavouritesAmount;
 
   @override
   State<StatefulWidget> createState() {
@@ -26,6 +31,8 @@ class FilmsScreen extends StatefulWidget {
 class _FilmsScreenState extends State<FilmsScreen> {
   final FilmsBloc _filmsBloc = getIt<FilmsBloc>();
   late List<UiFilm> _films;
+
+  var _favouritesBadgeAmount = 0;
 
   @override
   void initState() {
@@ -109,20 +116,23 @@ class _FilmsScreenState extends State<FilmsScreen> {
   }
 
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
-}
 
-Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films) {
-  final filmDetail = films[index];
-  return ListTile(
-    key: ValueKey(filmDetail),
-    contentPadding: const EdgeInsets.all(10),
-    leading: _itemThumbnail(filmDetail),
-    trailing: const Icon(Icons.drag_handle),
-    title: _itemTitle(filmDetail),
-    onTap: () {
-      _navigationToFilmDetail(context, filmDetail);
-    },
-  );
+  Widget _listViewItemBuilder(BuildContext context, int index, List<UiFilm> films) {
+    final filmDetail = films[index];
+    return ListTile(
+      key: ValueKey(filmDetail),
+      contentPadding: const EdgeInsets.all(10),
+      leading: _itemThumbnail(filmDetail),
+      trailing: const Icon(Icons.drag_handle),
+      title: _itemTitle(filmDetail),
+      onTap: () {
+        _favouritesBadgeAmount++;
+        //TODO refactor, use stateManagment
+        widget.onChangeFavouritesAmount!(_favouritesBadgeAmount);
+        _navigationToFilmDetail(context, filmDetail);
+      },
+    );
+  }
 }
 
 void _navigationToFilmDetail(BuildContext context, UiFilm filmDetail) {

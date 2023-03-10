@@ -16,9 +16,12 @@ class InitialBlocProviderScreen extends StatelessWidget {
         if (state is AuthenticationInitial) {
           return const SplashScreen();
         } else if (state is AuthenticationAuthenticated) {
-          return const FilmsScreen(Month.january);
+          //TODO refactor, use stateManagment
+          // return const FilmsScreen(Month.january);
+          return const FilmsScreen(Month.january, null);
         } else if (state is NotificationClickedState) {
-          return FilmsScreen(state.month);
+          // return FilmsScreen(state.month);
+          return FilmsScreen(state.month, null);
         } else if (state is AuthenticationUnauthenticated) {
           return const LoginScreen();
         } else {
